@@ -11,10 +11,44 @@ Features
 ✅ Export to multiple formats (GeoTIFF, Shapefile, GeoJSON)
 ✅ Batch processing for time-series analysis
 
-**Requirements**
+# Requirements
 gdal>=3.0.0
 rasterio>=1.2.0
 geopandas>=0.10.0
 numpy>=1.20.0
 matplotlib>=3.3.0
 sentinelsat>=1.0.0
+# Clone repository
+git clone https://github.com/yourusername/flood-extent-mapper.git
+cd flood-extent-mapper
+
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+from flood_mapper import FloodExtentMapper
+
+# Initialize mapper
+mapper = FloodExtentMapper(
+    aoi='path/to/area_of_interest.geojson',
+    start_date='2022-10-01',
+    end_date='2022-10-15'
+)
+
+# Download Sentinel-1 data
+mapper.download_sentinel1()
+
+# Process and detect floods
+flood_extent = mapper.detect_flood_extent()
+
+# Export results
+mapper.export_results(output_path='outputs/', format='geotiff')
+
+# Generate impact report
+mapper.estimate_exposure(
+    population_raster='path/to/worldpop.tif',
+    buildings='path/to/buildings.geojson'
+)
